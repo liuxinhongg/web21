@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        .box{
+            width: 85%;
+            box-shadow: 0px 0px 5px #999;
+            padding: 20px;
+            margin: 100px auto;
+        }
+        .box ul{
+            width: 100%;
+            display: flex;
+            list-style: none;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+        }
+        .box ul li{
+            width: 90px;
+            height: 50px;
+            margin: 10px;
+        }
+        .box ul li h3{
+            line-height: 50px;
+        }
+        .tejia,.kuzi,.jingpin{
+            width: 85%;
+            display: flex;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+            margin: 50px auto;
+
+        }
+        .item{
+            width: 300px;
+            height: 350px;
+            margin: 20px;
+            border: 1px solid #efefef;
+        }
+        .item img{
+            width: 100%;
+            height: 300px;
+        }
+        .item h3{
+            text-align: center;
+            line-height: 50px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <ul class="oul">
+            <!-- <li>
+                <img src=""/>
+                <h3></h3>
+            </li> -->
+        </ul>
+    </div>
+    <div class="tejia">
+        <!-- <div class="item"> 
+            <img src="" alt="">
+            <h3></h3>
+        </div> -->
+    </div>
+    <div class="kuzi"></div>
+    <div class="jingpin"></div>
+    <script>
+        $.ajax({
+            url:"http://127.0.0.1/w/website/findGoodsTypeList",
+            type:'get',
+            data:{},
+            success:function(res){
+                console.log(res);
+                var data = res.data;
+                data.forEach(item => {
+                    $(".oul").append(`
+                        <li>
+                            <h3><a href="sort.html?aa=${item.name}"> ${item.name}</a></h3>
+                        </li>
+                    `)
+                });
+                
+            }
+        })
+        getdata("特价",".tejia");
+        getdata("下装",".kuzi");
+        getdata("精品",".jingpin");
+        function getdata(val,content){
+            $.ajax({
+                url:"http://127.0.0.1/w/website/findGoodsList",
+                data:{
+                    info:val,
+                    pageNo:1
+                },
+                success:function(res){
+                    console.log(res)
+                    var data = res.data.tbk_dg_material_optional_response.result_list.map_data;
+                    for (var i = 0; i < 9 ;i++){
+                        $(content).append(`
+                            <div class="item"> 
+                                <img src="${data[i].pict_url}" alt="">
+                                <h3>${data[i].short_title}</h3>
+                            </div>`
+                        )
+                    }
+                }
+            })
+        }
+    </script>
+</body>
+</html>

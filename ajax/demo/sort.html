@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</head>
+<body>
+    我是分类页面
+    <script>
+        var name = decodeURI(location.search.split("=")[1])
+        console.log(name)
+        $.ajax({
+            url:"http://127.0.0.1/w/website/findGoodsList",
+            data:{
+                info:name,
+                pageNo:1
+            },
+            success:function(res){
+                console.log(res)
+                var data = res.data.tbk_dg_material_optional_response.result_list.map_data;
+                var html = ''
+                // for(var i = 0;i<9;i++){
+                //     $()
+                // }
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</head>
+
+<body>
+    <h1>登录页面</h1>
+    <p>
+        用户名：<input type="text" id="username">
+    </p>
+    <p>
+        密码：<input type="text" id="pass">
+    </p>
+    <div id="mpanel2">
+    </div>
+
+    <button type="button" id="check-btn" class="verify-btn">确定</button>
+    <p>
+        <input type="button" value="登录" id="btn">
+    </p>
+    <script>
+        var state = false;
+        $('#mpanel2').codeVerify({
+            type: 1,
+            width: '400px',
+            height: '50px',
+            fontSize: '30px',
+            codeLength: 6,
+            btnId: 'check-btn',
+            ready: function() {},
+            success: function() {
+                alert('验证匹配！');
+                state = true
+            },
+            error: function() {
+                alert('验证码不匹配！');
+            }
+        });
+        $("#btn").click(function() {
+            if (state && $("#username").val() && $("#pass").val()) {
+                $.ajax({
+                    url: 'http://192.168.1.122:3000/users/login',
+                    type: "post",
+                    data: {
+                        username: $("#username").val(),
+                        password: $("#pass").val()
+                    },
+                    success: function(res) {
+                        console.log(res)
+                    },
+                    fail: function(err) {
+                        console.log(err)
+                    }
+                })
+            }
+
+        })
+    </script>
+</body>
+
+</html>

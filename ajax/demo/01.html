@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <p>用户名：<input type="text" id="username" /> </p>
+    <p>密码：<input type="text" id="pass" /> </p>
+    <p>邮箱：<input type="text" id="email" /> </p>
+    <p>手机号：<input type="text" id="phone" /> </p>
+    <p><input type="button" value="注册" id="btn" /> </p>
+    <script>
+        $("#btn").click(function() {
+            $.ajax({
+                url: "http://192.168.1.122:3000/users/register",
+                type: "post",
+                data: {
+                    username: $("#username").val(),
+                    password: $("#pass").val(),
+                    email: $("#email").val(),
+                    phone: $("#phone").val()
+                },
+                success: function(res) {
+                    console.log(res);
+                    if (res.state === 0) {
+                        setTimeout(function() {
+                            window.location.href = "./login.html"
+                        }, 2000)
+
+                    }
+                },
+                fail: function(err) {
+                    console.log(err);
+                }
+            })
+        })
+    </script>
+</body>
+
+</html>
